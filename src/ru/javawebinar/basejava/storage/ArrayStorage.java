@@ -1,6 +1,6 @@
-package com.urise.webapp.storage;
+package ru.javawebinar.basejava.storage;
 
-import com.urise.webapp.model.Resume;
+import ru.javawebinar.basejava.model.Resume;
 
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOfRange;

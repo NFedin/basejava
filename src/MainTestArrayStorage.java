@@ -1,5 +1,5 @@
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ArrayStorage;
+import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.ArrayStorage;
 
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
@@ -8,11 +8,11 @@ public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
-        com.urise.webapp.model.Resume r1 = new com.urise.webapp.model.Resume();
+        Resume r1 = new Resume();
         r1.setUuid("uuid1");
-        com.urise.webapp.model.Resume r2 = new com.urise.webapp.model.Resume();
+        Resume r2 = new Resume();
         r2.setUuid("uuid2");
-        com.urise.webapp.model.Resume r3 = new com.urise.webapp.model.Resume();
+        Resume r3 = new Resume();
         r3.setUuid("uuid3");
 
         ARRAY_STORAGE.save(r1);
