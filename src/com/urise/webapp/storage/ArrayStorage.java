@@ -30,8 +30,12 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         if (findResumeIndex(r.getUuid()) == -1) {
-            storage[length] = r;
-            length++;
+            if (length < storage.length) {
+                storage[length] = r;
+                length++;
+            } else {
+                System.out.println("ERROR: overflow storage");
+            }
         } else {
             System.out.println("ERROR: This resume exist");
         }
