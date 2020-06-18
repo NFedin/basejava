@@ -2,20 +2,21 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.Arrays;
+
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOfRange;
 
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+public class ArrayStorage implements Storage{
+    private static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int length = 0;
 
     public void clear() {
-        for (int i = 0; i < length; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, null);
         length = 0;
     }
 
@@ -30,7 +31,7 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         if (findResumeIndex(r.getUuid()) == -1) {
-            if (length < storage.length) {
+            if (length < STORAGE_LIMIT) {
                 storage[length] = r;
                 length++;
             } else {
