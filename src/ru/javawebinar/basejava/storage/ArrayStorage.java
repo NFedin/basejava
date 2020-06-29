@@ -10,10 +10,7 @@ import static java.util.Arrays.copyOfRange;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage implements Storage{
-    private static final int STORAGE_LIMIT = 10000;
-    private Resume[] storage = new Resume[STORAGE_LIMIT];
-    private int length = 0;
+public class ArrayStorage extends AbstractArrayStorage {
 
     public void clear() {
         Arrays.fill(storage, null);
@@ -42,15 +39,6 @@ public class ArrayStorage implements Storage{
         }
     }
 
-    public Resume get(String uuid) {
-        int index = findResumeIndex(uuid);
-        if (index != -1) {
-            return storage[index];
-        } else {
-            System.out.println("ERROR: This resume not exist");
-            return null;
-        }
-    }
 
     public void delete(String uuid) {
         int index = findResumeIndex(uuid);
@@ -69,11 +57,7 @@ public class ArrayStorage implements Storage{
         return copyOfRange(storage, 0, length);
     }
 
-    public int size() {
-        return length;
-    }
-
-    private int findResumeIndex(String uuid) {
+    protected int findResumeIndex(String uuid) {
         for (int i = 0; i < length; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
