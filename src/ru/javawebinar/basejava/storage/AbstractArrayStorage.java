@@ -1,5 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exception.ExistStorageException;
+import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -20,30 +23,30 @@ public abstract class AbstractArrayStorage implements Storage {
         length = 0;
     }
 
-    public Resume get(String uuid) {
-        int index = findResumeIndex(uuid);
-        if (index < 0) {
-            System.out.println("ERROR: This resume not exist");
-            return null;
-        }
-        return storage[index];
-    }
-
     public void update(Resume r) {
         int index = findResumeIndex(r.getUuid());
         if (index == -1) {
-            System.out.println("Resume " + r.getUuid() + " not exist");
+            throw new NotExistStorageException("Resume " + r.getUuid() + " not exist");
         } else {
             storage[index] = r;
         }
     }
 
+    public Resume get(String uuid) {
+        int index = findResumeIndex(uuid);
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        }
+        return storage[index];
+    }
+
+
     public void save(Resume r) {
         int index = findResumeIndex(r.getUuid());
         if (index > 0) {
-            System.out.println("ERROR: This resume exist");
+            throw new ExistStorageException(r.getUuid());
         } else if (length == STORAGE_LIMIT) {
-            System.out.println("Storage overflow");
+            throw new StorageException("Storage overflow", r.getUuid());
         } else {
             insertElement(r, index);
             length++;
@@ -53,7 +56,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = findResumeIndex(uuid);
         if (index < 0) {
-            System.out.println("ERROR: This resume not exist");
+            throw new NotExistStorageException(uuid);
         } else {
             fillDeletedElement(index);
             storage[length - 1] = null;

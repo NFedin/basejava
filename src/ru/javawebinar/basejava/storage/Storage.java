@@ -2,11 +2,6 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
-
-import static java.lang.System.arraycopy;
-import static java.util.Arrays.copyOfRange;
-
 /**
  * Array based storage for Resumes
  */
