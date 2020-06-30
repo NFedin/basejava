@@ -4,6 +4,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
+import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOfRange;
 
 public abstract class AbstractArrayStorage implements Storage {
@@ -30,9 +31,32 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public abstract void delete(String uuid);
+    public void save(Resume r) {
+        int index = findResumeIndex(r.getUuid());
+        if (index == -1) {
+            if (length < STORAGE_LIMIT) {
+                insertElement(index);
+                storage[length] = r;
+                length++;
+            } else {
+                System.out.println("ERROR: overflow storage");
+            }
+        } else {
+            System.out.println("ERROR: This resume exist");
+        }
+    }
 
-    public abstract void save(Resume r);
+    public void delete(String uuid) {
+        int index = findResumeIndex(uuid);
+        if (index != -1) {
+            length--;
+            arraycopy(storage, index + 1, storage, index, length - index);
+        } else {
+            System.out.println("ERROR: This resume not exist");
+        }
+    }
+
+    protected abstract void insertElement(int index);
 
     public Resume[] getAll() {
         return copyOfRange(storage, 0, length);

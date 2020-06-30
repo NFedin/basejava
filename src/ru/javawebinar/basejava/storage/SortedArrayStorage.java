@@ -19,22 +19,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void save(Resume r) {
-        int index = findResumeIndex(r.getUuid());
-        if (index < length) {
-            if (length < STORAGE_LIMIT) {
-                arraycopy(storage, index, storage, index + 1, length - index);
-                storage[length] = r;
-                length++;
-            } else {
-                System.out.println("ERROR: overflow storage");
-            }
-        } else {
-            System.out.println("ERROR: This resume exist");
-        }
-    }
-
-    @Override
     public void delete(String uuid) {
         int index = findResumeIndex(uuid);
         if (index < length) {
@@ -43,6 +27,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         } else {
             System.out.println("ERROR: This resume not exist");
         }
+    }
+
+    @Override
+    protected void insertElement(int index) {
+
     }
 
 
