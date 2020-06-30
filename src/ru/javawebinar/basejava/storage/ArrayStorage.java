@@ -8,20 +8,16 @@ import ru.javawebinar.basejava.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void update(Resume r) {
-        int index = findResumeIndex(r.getUuid());
-        if (index != -1) {
-            storage[index] = r;
-        } else {
-            System.out.println("ERROR: This resume not exist");
-        }
+    protected void insertElement(Resume r, int index) {
+        storage[length] = r;
     }
 
     @Override
-    protected void insertElement(int index) {
+    protected void fillDeletedElement(int index) {
 
     }
 
+    @Override
     protected int findResumeIndex(String uuid) {
         for (int i = 0; i < length; i++) {
             if (uuid.equals(storage[i].getUuid())) {

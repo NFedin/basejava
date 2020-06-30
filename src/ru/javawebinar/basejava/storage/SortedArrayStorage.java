@@ -4,34 +4,21 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
-import static java.lang.System.arraycopy;
-
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void update(Resume r) {
-        int index = findResumeIndex(r.getUuid());
-        if (index < length) {
-            storage[index] = r;
-        } else {
-            System.out.println("ERROR: This resume not exist");
-        }
+    protected void insertElement(Resume r, int index) {
+        int insertIndex = -index - 1;
+        System.arraycopy(storage, insertIndex, storage, insertIndex + 1, length - insertIndex);
+        storage[insertIndex] = r;
     }
 
     @Override
-    public void delete(String uuid) {
-        int index = findResumeIndex(uuid);
-        if (index < length) {
-            arraycopy(storage, index + 1, storage, index, length - index);
-            length--;
-        } else {
-            System.out.println("ERROR: This resume not exist");
+    protected void fillDeletedElement(int index) {
+        int numMoved = length - index - 1;
+        if (numMoved > 0) {
+            System.arraycopy(storage, index + 1, storage, index, numMoved);
         }
-    }
-
-    @Override
-    protected void insertElement(int index) {
-
     }
 
 
