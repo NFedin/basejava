@@ -2,21 +2,14 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
-
 import static java.lang.System.arraycopy;
-import static java.util.Arrays.copyOfRange;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void clear() {
-        Arrays.fill(storage, null);
-        length = 0;
-    }
-
+    @Override
     public void update(Resume r) {
         int index = findResumeIndex(r.getUuid());
         if (index != -1) {
@@ -26,6 +19,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
+    @Override
     public void save(Resume r) {
         if (findResumeIndex(r.getUuid()) == -1) {
             if (length < STORAGE_LIMIT) {
@@ -39,7 +33,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-
+    @Override
     public void delete(String uuid) {
         int index = findResumeIndex(uuid);
         if (index != -1) {
@@ -53,9 +47,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    public Resume[] getAll() {
-        return copyOfRange(storage, 0, length);
-    }
 
     protected int findResumeIndex(String uuid) {
         for (int i = 0; i < length; i++) {

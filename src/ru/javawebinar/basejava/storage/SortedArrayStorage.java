@@ -4,32 +4,47 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
+import static java.lang.System.arraycopy;
+
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void clear() {
-
-    }
-
-    @Override
     public void update(Resume r) {
-
+        int index = findResumeIndex(r.getUuid());
+        if (index < length) {
+            storage[index] = r;
+        } else {
+            System.out.println("ERROR: This resume not exist");
+        }
     }
 
     @Override
     public void save(Resume r) {
-
+        int index = findResumeIndex(r.getUuid());
+        if (index < length) {
+            if (length < STORAGE_LIMIT) {
+                arraycopy(storage, index, storage, index + 1, length - index);
+                storage[length] = r;
+                length++;
+            } else {
+                System.out.println("ERROR: overflow storage");
+            }
+        } else {
+            System.out.println("ERROR: This resume exist");
+        }
     }
 
     @Override
     public void delete(String uuid) {
-
+        int index = findResumeIndex(uuid);
+        if (index < length) {
+            arraycopy(storage, index + 1, storage, index, length - index);
+            length--;
+        } else {
+            System.out.println("ERROR: This resume not exist");
+        }
     }
 
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }
 
     @Override
     protected int findResumeIndex(String uuid) {
