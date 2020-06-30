@@ -10,7 +10,7 @@ import java.util.Arrays;
 import static java.util.Arrays.copyOfRange;
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 100000;
+    protected static final int STORAGE_LIMIT = 1000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int length = 0;
 
@@ -43,7 +43,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void save(Resume r) {
         int index = findResumeIndex(r.getUuid());
-        if (index > 0) {
+        if (index >= 0) {
             throw new ExistStorageException(r.getUuid());
         } else if (length == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
