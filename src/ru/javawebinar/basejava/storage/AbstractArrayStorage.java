@@ -1,11 +1,10 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static java.util.Arrays.copyOfRange;
 
@@ -54,8 +53,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void fillDeletedElement(int index);
 
-    public Resume[] getAll() {
-        return copyOfRange(storage, 0, length);
+    @Override
+    public List<Resume> doCopyAll() {
+        return Arrays.asList(copyOfRange(storage, 0, length));
     }
 
     protected abstract Integer getSearchKey(String uuid);
