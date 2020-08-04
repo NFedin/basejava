@@ -8,7 +8,7 @@ import java.util.List;
 
 import static java.util.Arrays.copyOfRange;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 1000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int length = 0;
@@ -23,28 +23,28 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Resume r, Object index) {
-        storage[(Integer) index] = r;
+    protected void doUpdate(Resume r, Integer index) {
+        storage[index] = r;
     }
 
 
-    public Resume doGet(Object index) {
-        return storage[(Integer) index];
+    public Resume doGet(Integer index) {
+        return storage[index];
     }
 
     @Override
-    protected void doSave(Resume r, Object index) {
+    protected void doSave(Resume r, Integer index) {
         if (length == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
-            insertElement(r, (Integer) index);
+            insertElement(r, index);
             length++;
         }
     }
 
     @Override
-    public void doDelete(Object index) {
-        fillDeletedElement((Integer) index);
+    public void doDelete(Integer index) {
+        fillDeletedElement(index);
         storage[length - 1] = null;
         length--;
     }
@@ -61,7 +61,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract Integer getSearchKey(String uuid);
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 }
